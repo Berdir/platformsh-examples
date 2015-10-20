@@ -31,10 +31,19 @@ You would put here your local configuration for example:
 
     // Decode Platform routes (as these are dynamically generated).
     $routes = json_decode(base64_decode($_ENV['PLATFORM_ROUTES']), TRUE);
+    $site_url = '';
+
+    // Find the upstream route and remove its trailing slash.
+    foreach ($routes as $url => $route) {
+        if ($route['type'] == 'upstream') {
+            $site_url = rtrim($url, '/');
+            break;
+        }
+    }
 
     // Change site URL per environment.
-    define('WP_HOME', key($routes));
-    define('WP_SITEURL', key($routes));
+    define('WP_HOME', $site_url);
+    define('WP_SITEURL', $site_url);
 }
 // Since you can have multiple installations in one database, you need a unique
 // prefix.
