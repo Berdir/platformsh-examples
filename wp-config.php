@@ -4,7 +4,7 @@ if (empty($_ENV['PLATFORM_RELATIONSHIPS'])){
 /*
 You would put here your local configuration for example:
 //define('WP_HOME', "http://localhost");
-//define('WP_SITEURL',"http://localhost");  
+//define('WP_SITEURL',"http://localhost");
 //define('DB_NAME', "my_wordpress");
 //define('DB_USER', "user");
 //define('DB_PASSWORD', "a strong password");
@@ -16,9 +16,9 @@ You would put here your local configuration for example:
 } else {
     // This is where we get the relationships of our application dynamically
     //from Platform.sh
-    
+
     $relationships = json_decode(base64_decode($_ENV['PLATFORM_RELATIONSHIPS']), TRUE);
-  
+
     // We are using the first relationship called "database" found in your
     // relationships. Note that you can call this relationship as you wish
     // in you .platform.app.yaml file, but 'database' is a good name.
@@ -28,13 +28,13 @@ You would put here your local configuration for example:
     define('DB_HOST', $relationships['database'][0]['host']);
     define('DB_CHARSET', 'utf8');
     define('DB_COLLATE', '');
-  
+
     // Decode Platform routes (as these are dynamically generated).
     $routes = json_decode(base64_decode($_ENV['PLATFORM_ROUTES']), TRUE);
-  
+
     // Change site URL per environment.
     define('WP_HOME', key($routes));
-    define('WP_SITEURL', key($routes));    
+    define('WP_SITEURL', key($routes));
 }
 // Since you can have multiple installations in one database, you need a unique
 // prefix.
