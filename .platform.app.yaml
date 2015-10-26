@@ -5,7 +5,9 @@
 name: php
 
 # The toolstack used to build the application.
-toolstack: "php:drupal"
+type: php
+build:
+    flavor: drupal
 
 # The relationships of the application with services or other applications.
 # The left-hand side is the name of the relationship as it will be exposed
@@ -51,6 +53,6 @@ crons:
 
 dependencies:
     ruby:
-        sass: "3.4.7"
+        sass: "3.4.19"
     nodejs:
         grunt-cli: "~0.1.13"
