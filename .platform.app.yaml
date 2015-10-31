@@ -5,9 +5,9 @@
 name: php
 
 # The toolstack used to build the application.
-type: php
+type: "php:5.6"
 build:
-    flavor: symfony
+    flavor: composer
 
 
 # The relationships of the application with services or other applications.
@@ -29,20 +29,19 @@ disk: 2048
 
 # The mounts that will be performed when the package is deployed.
 mounts:
-    "/app/cache": "shared:files/cache"
-    "/app/logs": "shared:files/logs"
+    "/var/cache": "shared:files/cache"
+    "/var/logs": "shared:files/logs"
 
 # The hooks that will be performed when the package is deployed.
 hooks:
     build: |
-      # rm web/app_dev.php
-      app/console --env=prod assetic:dump --no-debug
+      bin/console --env=prod assets:install --no-debug
     deploy: |
       echo
-      # app/console --env=prod doctrine:phpcr:init:dbal
-      # app/console --env=prod doctrine:phpcr:workspace:create sandbox
-      # app/console --env=prod doctrine:phpcr:repository:init
-      # app/console --env=prod -v doctrine:phpcr:fixtures:load
+      # bin/console --env=prod doctrine:phpcr:init:dbal
+      # bin/console --env=prod doctrine:phpcr:workspace:create sandbox
+      # bin/console --env=prod doctrine:phpcr:repository:init
+      # bin/console --env=prod -v doctrine:phpcr:fixtures:load
 # The configuration of scheduled execution.
 # see http://symfony.com/doc/current/components/console/introduction.html
 #crons:
