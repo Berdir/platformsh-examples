@@ -48,7 +48,7 @@ hooks:
     # We run deploy hook after your application has been deployed and started.
     deploy: |
       cd web
-      drush cr
+      drush cache-rebuild
       drush -y config-import
       drush -y updatedb
 
