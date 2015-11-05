@@ -9,7 +9,7 @@ type: "php:5.6"
 
 # Configuration of the build of this application.
 build:
-    flavor: drupal
+    flavor: composer
 
 # The build-time dependencies of the app.
 dependencies:
@@ -28,7 +28,7 @@ relationships:
 # The configuration of app when it is exposed to the web.
 web:
     # The public directory of the app, relative to its root.
-    document_root: "/web/"
+    document_root: "/web"
     # The front-controller script to send non-static requests to.
     passthru: "/index.php"
 
@@ -44,9 +44,7 @@ mounts:
 
 # The hooks executed at various points in the lifecycle of the application.
 hooks:
-    build: |
-      composer install
-    # We run deploy hooks after your application has been deployed and started.
+    # We run deploy hook after your application has been deployed and started.
     deploy: |
       cd web
       drush -y updatedb
