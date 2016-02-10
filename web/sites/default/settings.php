@@ -84,10 +84,20 @@ if (getenv("PLATFORM_RELATIONSHIPS")) {
 
   $variables = json_decode(base64_decode($_ENV['PLATFORM_VARIABLES']), TRUE);
 
-  $prefix_len = strlen('drupal:');
+  // Apply config override variables.
+  $prefix_len = strlen('d8config:');
   foreach ($variables as $name => $value) {
-    if (substr($name, 0, $prefix_len) == 'drupal:') {
-      $conf[substr($name, $prefix_len)] = $value;
+    if (substr($name, 0, $prefix_len) == 'd8config:') {
+      list ($config_name, $config_key) = explode(':', substr($name, $prefix_len));
+      $config[$config_name][$config_key] = $value;
+    }
+  }
+
+  // Apply settings variables.
+  $prefix_len = strlen('d8settings:');
+  foreach ($variables as $name => $value) {
+    if (substr($name, 0, $prefix_len) == 'd8settings:') {
+      $settings[substr($name, $prefix_len)] = $value;
     }
   }
 
